@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pink Details Form · Tell us about you</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --pink-50: #fff1f6;
+      --pink-100: #ffe4ef;
+      --pink-200: #ffc9dd;
+      --pink-300: #ff9ec2;
+      --pink-400: #ff6ea8;
+      --pink-500: #f43f8e;
+      --pink-600: #db2478;
+      --pink-700: #b81861;
+      --ink: #3d1b2b;
+      --ink-soft: #7a4a5f;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+      background: linear-gradient(135deg, #ffe4ef 0%, #ffd1e3 50%, #ffc0da 100%);
+      color: var(--ink);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* floating hearts background decoration */
+    .bg-hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bg-hearts span {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 1.4rem;
+      animation: floatUp 14s linear infinite;
+    }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.9; }
+      90%  { opacity: 0.7; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* main card */
+    .card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 460px;
+      background: #ffffff;
+      border-radius: 32px;
+      padding: 2.4rem 2rem 2rem;
+      box-shadow:
+        0 30px 60px -20px rgba(244, 63, 142, 0.35),
+        0 10px 25px -10px rgba(244, 63, 142, 0.18);
+      border: 2px solid #ffe4ef;
+      animation: cardIn 0.5s ease-out;
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .card-header {
+      text-align: center;
+      margin-bottom: 1.8rem;
+    }
+
+    .heart-icon {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 1rem;
+      background: linear-gradient(135deg, var(--pink-400), var(--pink-600));
+      border-radius: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2rem;
+      box-shadow: 0 12px 22px -10px rgba(244, 63, 142, 0.6);
+      transform: rotate(-6deg);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover .heart-icon {
+      transform: rotate(6deg) scale(1.05);
+    }
+
+    .card-header h1 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 0.35rem;
+    }
+
+    .card-header p {
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+    }
+
+    /* form fields */
+    .field {
+      margin-bottom: 1.2rem;
+    }
+
+    .field label {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--pink-700);
+      margin-bottom: 0.5rem;
+    }
+
+    .field label i {
+      color: var(--pink-500);
+      font-size: 0.95rem;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      font-family: inherit;
+      font-size: 1rem;
+      color: var(--ink);
+      background: var(--pink-50);
+      border: 2px solid var(--pink-100);
+      border-radius: 14px;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .field input::placeholder {
+      color: #c99bb0;
+      font-size: 0.95rem;
+    }
+
+    .field input:focus {
+      border-color: var(--pink-400);
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(255, 110, 168, 0.18);
+    }
+
+    .field input:invalid:not(:placeholder-shown) {
+      border-color: #ff5c5c;
+    }
+
+    /* auto-age hint */
+    .hint {
+      display: block;
+      margin-top: 0.4rem;
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+      font-style: italic;
+      min-height: 1.2rem;
+    }
+
+    /* submit button */
+    .submit-btn {
+      width: 100%;
+      padding: 0.95rem;
+      margin-top: 0.6rem;
+      font-family: inherit;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: white;
+      background: linear-gradient(135deg, var(--pink-400), var(--pink-600));
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 12px 22px -10px rgba(244, 63, 142, 0.65);
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 28px -12px rgba(244, 63, 142, 0.75);
+      filter: brightness(1.05);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    /* success / result screen */
+    .result {
+      display: none;
+      text-align: center;
+      animation: cardIn 0.4s ease-out;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .result .check {
+      width: 76px;
+      height: 76px;
+      margin: 0 auto 1.2rem;
+      background: linear-gradient(135deg, #ff9ec2, var(--pink-500));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2.2rem;
+      box-shadow: 0 14px 26px -10px rgba(244, 63, 142, 0.6);
+      animation: pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes pop {
+      0%   { transform: scale(0); }
+      100% { transform: scale(1); }
+    }
+
+    .result h2 {
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+    }
+
+    .result > p {
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .details-box {
+      background: var(--pink-50);
+      border: 2px solid var(--pink-100);
+      border-radius: 20px;
+      padding: 1.2rem 1.3rem;
+      text-align: left;
+      margin-bottom: 1.5rem;
+    }
+
+    .details-box .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.65rem 0;
+      border-bottom: 1px dashed var(--pink-200);
+    }
+
+    .details-box .row:last-child {
+      border-bottom: none;
+    }
+
+    .details-box .label {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--pink-700);
+    }
+
+    .details-box .label i {
+      color: var(--pink-500);
+      width: 16px;
+      text-align: center;
+    }
+
+    .details-box .value {
+      font-weight: 700;
+      color: var(--ink);
+      font-size: 1rem;
+      text-align: right;
+      word-break: break-word;
+    }
+
+    .again-btn {
+      background: white;
+      color: var(--pink-600);
+      border: 2px solid var(--pink-200);
+      padding: 0.75rem 1.6rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .again-btn:hover {
+      background: var(--pink-50);
+      border-color: var(--pink-400);
+      transform: translateY(-1px);
+    }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 1.6rem;
+      font-size: 0.8rem;
+      color: #c48aa3;
+    }
+
+    .footer-note i {
+      color: var(--pink-400);
+    }
+
+    /* responsive */
+    @media (max-width: 480px) {
+      .card { padding: 1.8rem 1.4rem 1.5rem; border-radius: 26px; }
+      .card-header h1 { font-size: 1.45rem; }
+      .heart-icon { width: 58px; height: 58px; font-size: 1.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- floating hearts -->
+  <div class="bg-hearts" aria-hidden="true">
+    <span style="left: 6%;  animation-duration: 16s; animation-delay: 0s;">♡</span>
+    <span style="left: 18%; animation-duration: 12s; animation-delay: 3s;">♥</span>
+    <span style="left: 32%; animation-duration: 18s; animation-delay: 6s;">♡</span>
+    <span style="left: 48%; animation-duration: 14s; animation-delay: 1s;">♥</span>
+    <span style="left: 63%; animation-duration: 20s; animation-delay: 8s;">♡</span>
+    <span style="left: 76%; animation-duration: 13s; animation-delay: 4s;">♥</span>
+    <span style="left: 88%; animation-duration: 17s; animation-delay: 2s;">♡</span>
+    <span style="left: 55%; animation-duration: 15s; animation-delay: 9s;">♥</span>
+  </div>
+
+  <main class="card">
+
+    <!-- ===== FORM SCREEN ===== -->
+    <div id="formScreen">
+      <div class="card-header">
+        <div class="heart-icon">
+          <i class="fas fa-heart"></i>
+        </div>
+        <h1>Tell us about you 💗</h1>
+        <p>We just need a few little details</p>
+      </div>
+
+      <form id="detailsForm" novalidate>
+
+        <!-- Name -->
+        <div class="field">
+          <label for="name"><i class="fas fa-user"></i> Your name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="e.g. Sophia Rose"
+            required
+            autocomplete="name"
+          >
+        </div>
+
+        <!-- Year of birth -->
+        <div class="field">
+          <label for="birthYear"><i class="fas fa-calendar-heart"></i> Year of birth</label>
+          <input
+            type="number"
+            id="birthYear"
+            name="birthYear"
+            placeholder="e.g. 1998"
+            min="1900"
+            max="2026"
+            required
+            inputmode="numeric"
+          >
+          <span class="hint" id="ageHint"></span>
+        </div>
+
+        <!-- Age -->
+        <div class="field">
+          <label for="age"><i class="fas fa-cake-candles"></i> Your age</label>
+          <input
+            type="number"
+            id="age"
+            name="age"
+            placeholder="e.g. 27"
+            min="0"
+            max="126"
+            required
+            inputmode="numeric"
+          >
+          <span class="hint" id="ageAutoHint">✨ Fills in automatically from your birth year</span>
+        </div>
+
+        <button type="submit" class="submit-btn">
+          <i class="fas fa-paper-plane"></i> Submit my details
+        </button>
+      </form>
+
+      <p class="footer-note">
+        Made with <i class="fas fa-heart"></i> · your info stays in your browser
+      </p>
+    </div>
+
+    <!-- ===== RESULT SCREEN ===== -->
+    <div class="result" id="resultScreen">
+      <div class="check">
+        <i class="fas fa-check"></i>
+      </div>
+      <h2>Thank you! 🌸</h2>
+      <p>Here's what you shared with us:</p>
+
+      <div class="details-box">
+        <div class="row">
+          <span class="label"><i class="fas fa-user"></i> Name</span>
+          <span class="value" id="outName">—</span>
+        </div>
+        <div class="row">
+          <span class="label"><i class="fas fa-calendar-heart"></i> Year of birth</span>
+          <span class="value" id="outYear">—</span>
+        </div>
+        <div class="row">
+          <span class="label"><i class="fas fa-cake-candles"></i> Age</span>
+          <span class="value" id="outAge">—</span>
+        </div>
+      </div>
+
+      <button class="again-btn" id="againBtn">
+        <i class="fas fa-rotate-left"></i> Fill in again
+      </button>
+    </div>
+
+  </main>
+
+  <script>
+    // ===== Grab elements =====
+    const form         = document.getElementById('detailsForm');
+    const nameInput    = document.getElementById('name');
+    const yearInput    = document.getElementById('birthYear');
+    const ageInput     = document.getElementById('age');
+    const ageHint      = document.getElementById('ageHint');
+    const ageAutoHint  = document.getElementById('ageAutoHint');
+
+    const formScreen   = document.getElementById('formScreen');
+    const resultScreen = document.getElementById('resultScreen');
+
+    const outName = document.getElementById('outName');
+    const outYear = document.getElementById('outYear');
+    const outAge  = document.getElementById('outAge');
+    const againBtn = document.getElementById('againBtn');
+
+    // ===== Auto-calculate age from year of birth =====
+    yearInput.addEventListener('input', () => {
+      const year = parseInt(yearInput.value, 10);
+      const currentYear = new Date().getFullYear();
+
+      if (!yearInput.value) {
+        ageHint.textContent = '';
+        return;
+      }
+
+      if (isNaN(year) || year < 1900 || year > currentYear) {
+        ageHint.textContent = '⚠️ Please enter a valid year between 1900 and ' + currentYear;
+        ageHint.style.color = '#db2478';
+        return;
+      }
+
+      const calculatedAge = currentYear - year;
+
+      // Only auto-fill if the user hasn't typed their own age
+      if (!ageInput.value || ageInput.dataset.autofilled === 'true') {
+        ageInput.value = calculatedAge;
+        ageInput.dataset.autofilled = 'true';
+        ageAutoHint.textContent = '✨ Auto-filled from your birth year — edit if needed';
+      }
+
+      ageHint.textContent = '🎂 You turn ' + calculatedAge + ' this year';
+      ageHint.style.color = '#b81861';
+    });
+
+    // If user manually edits age, stop auto-overwriting it
+    ageInput.addEventListener('input', () => {
+      ageInput.dataset.autofilled = 'false';
+      ageAutoHint.textContent = '✍️ You entered this manually';
+    });
+
+    // ===== Handle submit =====
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = nameInput.value.trim();
+      const year = parseInt(yearInput.value, 10);
+      const age  = parseInt(ageInput.value, 10);
+      const currentYear = new Date().getFullYear();
+
+      // Simple validation
+      if (!name) {
+        alert('Please enter your name 🌸');
+        nameInput.focus();
+        return;
+      }
+      if (isNaN(year) || year < 1900 || year > currentYear) {
+        alert('Please enter a valid year of birth 🌸');
+        yearInput.focus();
+        return;
+      }
+      if (isNaN(age) || age < 0 || age > 126) {
+        alert('Please enter a valid age 🌸');
+        ageInput.focus();
+        return;
+      }
+
+      // Fill result screen
+      outName.textContent = name;
+      outYear.textContent = year;
+      outAge.textContent  = age + ' years old';
+
+      // Switch screens
+      formScreen.style.display   = 'none';
+      resultScreen.classList.add('show');
+
+      // Scroll card into view smoothly
+      document.querySelector('.card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    // ===== Reset / fill again =====
+    againBtn.addEventListener('click', () => {
+      resultScreen.classList.remove('show');
+      formScreen.style.display = 'block';
+
+      form.reset();
+      ageInput.dataset.autofilled = 'false';
+      ageHint.textContent = '';
+      ageAutoHint.textContent = '✨ Fills in automatically from your birth year';
+
+      nameInput.focus();
+    });
+  </script>
+</body>
+</html>
